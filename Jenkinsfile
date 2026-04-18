@@ -4,7 +4,7 @@ pipeline {
     environment {
         NAS_IP = credentials('nas-ip') 
         NAS_ROOT = credentials('nas-archive-path')
-        REPO_PATH = "/home/yong/MINI-V_Android"
+        REPO_PATH = "/opt/MINI-V_Android"
     }
 
     stages {
