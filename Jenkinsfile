@@ -10,13 +10,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                dir("${env.REPO_PATH}") {
-                    sh  """
-                            source build/envsetup.sh && \
-                            lunch lineage_${params.DEVICE_NAME}-ap4a-userdebug && \
-                            brunch ${params.DEVICE_NAME}
-                        """
-                }
+                sh """
+                    cd ${env.REPO_PATH} && \
+                    source build/envsetup.sh && \
+                    lunch lineage_${params.DEVICE_NAME}-ap4a-userdebug && \
+                    brunch ${params.DEVICE_NAME}
+                """
             }
         }
 
