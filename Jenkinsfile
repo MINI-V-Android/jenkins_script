@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh """
+                sh """#!/bin/bash
                     cd ${env.REPO_PATH} && \
                     source build/envsetup.sh && \
                     lunch lineage_${params.DEVICE_NAME}-ap4a-userdebug && \
@@ -27,7 +27,7 @@ pipeline {
                     script {
                         def targetDir = "${env.NAS_ROOT}/MINI-V Android/${params.DEVICE_NAME}"
 
-                        sh """
+                        sh """#!/bin/bash
                             lftp -u ${FTP_USER},${FTP_PW} ftp://${env.NAS_IP} -e " \
                             set ftp:list-options -a; \
                             mkdir -p '${targetDir}'; \
