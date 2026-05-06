@@ -12,7 +12,7 @@ pipeline {
             steps {
                 sh """#!/bin/bash
                     cd ${env.REPO_PATH} && \
-                    repo sync -c -j$(nproc) --force-sync --no-clone-bundle --no-tags && \
+                    repo sync -c -j\$(nproc) --force-sync --no-clone-bundle --no-tags && \
                     source build/envsetup.sh && \
                     make clean
                 """
@@ -25,7 +25,7 @@ pipeline {
                     cd ${env.REPO_PATH} && \
                     source build/envsetup.sh && \
                     lunch ${params.BUILD_TARGET} && \
-                    m bacon -j${nproc}
+                    m bacon -j\${nproc}
                 """
             }
         }
