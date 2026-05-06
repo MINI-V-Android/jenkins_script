@@ -11,6 +11,7 @@ pipeline {
         stage('Sync & Clean') {
             steps {
                 sh """#!/bin/bash
+                    umask 002 && \
                     cd ${env.REPO_PATH} && \
                     repo sync -c -j\$(nproc) --force-sync --no-clone-bundle --no-tags && \
                     source build/envsetup.sh && \
