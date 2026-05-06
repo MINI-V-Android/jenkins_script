@@ -25,7 +25,7 @@ pipeline {
                     cd ${env.REPO_PATH} && \
                     source build/envsetup.sh && \
                     lunch ${params.BUILD_TARGET} && \
-                    m bacon -j\${nproc}
+                    m bacon -j\$(nproc)
                 """
             }
         }
