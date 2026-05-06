@@ -17,6 +17,7 @@ pipeline {
                         repo sync -c -j\$(nproc) --force-sync --no-clone-bundle --no-tags && \
                         source build/envsetup.sh && \
                         make installclean
+                    "
                 """
             }
         }
@@ -29,6 +30,7 @@ pipeline {
                         source build/envsetup.sh && \
                         lunch ${params.BUILD_TARGET} && \
                         m bacon -j\$(nproc)
+                    "
                 """
             }
         }
