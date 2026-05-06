@@ -8,13 +8,23 @@ pipeline {
     }
 
     stages {
+        stage('Sync & Clean') {
+            steps {
+                sh """#!/bin/bash
+                    cd ${env.REPO_PATH}
+                    repo sync -c -j$(nproc) --force-sync --no-clone-bundle --no-tags
+                    source build/envsetup.sh && make clean
+                """
+            }
+        }
+
         stage('Build') {
             steps {
                 sh """#!/bin/bash
-                    cd ${env.REPO_PATH} && \
-                    source build/envsetup.sh && \
-                    lunch lineage_${params.DEVICE_NAME}-ap4a-userdebug && \
-                    brunch ${params.DEVICE_NAME}
+                    cd ${env.REPO_PATH}
+                    source build/envsetup.sh
+                    lunch ${params.BUILD_TARGET}
+                    m bacon -j${nproc}
                 """
             }
         }
