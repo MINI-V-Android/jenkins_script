@@ -11,9 +11,10 @@ pipeline {
         stage('Sync & Clean') {
             steps {
                 sh """#!/bin/bash
-                    cd ${env.REPO_PATH}
-                    repo sync -c -j$(nproc) --force-sync --no-clone-bundle --no-tags
-                    source build/envsetup.sh && make clean
+                    cd ${env.REPO_PATH} && \
+                    repo sync -c -j$(nproc) --force-sync --no-clone-bundle --no-tags && \
+                    source build/envsetup.sh && \
+                    make clean
                 """
             }
         }
@@ -21,9 +22,9 @@ pipeline {
         stage('Build') {
             steps {
                 sh """#!/bin/bash
-                    cd ${env.REPO_PATH}
-                    source build/envsetup.sh
-                    lunch ${params.BUILD_TARGET}
+                    cd ${env.REPO_PATH} && \
+                    source build/envsetup.sh && \
+                    lunch ${params.BUILD_TARGET} && \
                     m bacon -j${nproc}
                 """
             }
