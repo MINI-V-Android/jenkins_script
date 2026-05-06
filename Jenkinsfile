@@ -11,11 +11,12 @@ pipeline {
         stage('Sync & Clean') {
             steps {
                 sh """#!/bin/bash
-                    cd ${env.REPO_PATH} && \
-                    git config --global --add safe.directory '*' && \
-                    repo sync -c -j\$(nproc) --force-sync --no-clone-bundle --no-tags && \
-                    source build/envsetup.sh && \
-                    make clean
+                    sudo -u yong bash -c "
+                        cd ${env.REPO_PATH} && \
+                        git config --global --add safe.directory '*' && \
+                        repo sync -c -j\$(nproc) --force-sync --no-clone-bundle --no-tags && \
+                        source build/envsetup.sh && \
+                        make installclean
                 """
             }
         }
@@ -23,10 +24,11 @@ pipeline {
         stage('Build') {
             steps {
                 sh """#!/bin/bash
-                    cd ${env.REPO_PATH} && \
-                    source build/envsetup.sh && \
-                    lunch ${params.BUILD_TARGET} && \
-                    m bacon -j\$(nproc)
+                    sudo -u yong ionice -c 2 -n 7 bash -c "
+                        cd ${env.REPO_PATH} && \
+                        source build/envsetup.sh && \
+                        lunch ${params.BUILD_TARGET} && \
+                        m bacon -j\$(nproc)
                 """
             }
         }
