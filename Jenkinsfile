@@ -12,7 +12,8 @@ pipeline {
             steps {
                 sh """#!/bin/bash
                     umask 002 && \
-                    export REPO_TRACE_FILE="${env.WORKSPACE}/repo_trace.log" && \
+                    export REPO_TRACE=0 && \
+                    export REPO_TRACE_FILE=/dev/null && \
 
                     cd ${env.REPO_PATH} && \
                     repo sync -c -j\$(nproc) --force-sync --no-clone-bundle --no-tags && \
