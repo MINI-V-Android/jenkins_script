@@ -11,11 +11,8 @@ pipeline {
         stage('Sync & Clean') {
             steps {
                 sh """#!/bin/bash
-                    umask 002 && \
-                    export REPO_TRACE=0 && \
-                    export REPO_TRACE_FILE=/dev/null && \
-
                     cd ${env.REPO_PATH} && \
+                    git config --global --add safe.directory '*' && \
                     repo sync -c -j\$(nproc) --force-sync --no-clone-bundle --no-tags && \
                     source build/envsetup.sh && \
                     make clean
